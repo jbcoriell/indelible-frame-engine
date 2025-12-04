@@ -445,6 +445,6 @@ with st.sidebar:
                 if b not in st.session_state.pinned_items:
                     st.session_state.pinned_items[b] = []
                 for item in items:
-                    st.session_state.pinned_items[b].append({)
+                    st.session_state.pinned_items[b].append({}
                         'title': item['title'], 'url': item['url'], 'type': item['type'],
                         'description': item.get('description', ''), 'added': datetime
