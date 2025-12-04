@@ -260,6 +260,7 @@ def search_with_ai(query, content_type):
         
         client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
         
+        # Customize search instruction based on content type
         if content_type == "all":
             type_instruction = "Find 15 diverse sources: mix of articles, images, videos, and PDFs."
         elif content_type == "images":
@@ -305,20 +306,24 @@ Use the web_search tool to find REAL, WORKING, DIRECT URLs. Double-check that UR
             }]
         )
         
+        # Extract and parse response
         response_text = ""
         for block in message.content:
             if block.type == "text":
                 response_text += block.text
         
+        # Clean and parse JSON
         response_text = response_text.strip().replace("```json", "").replace("```", "")
         import re
         json_match = re.search(r'\[\s*\{[\s\S]*\}\s*\]', response_text)
         
         if json_match:
             results = json.loads(json_match.group(0))
+            # Ensure each has an id and validate URLs
             for i, r in enumerate(results):
                 if 'id' not in r:
                     r['id'] = str(i + 1)
+                # Basic URL validation
                 if not r.get('url', '').startswith('http'):
                     r['url'] = 'https://' + r.get('url', '')
             
@@ -336,6 +341,7 @@ Use the web_search tool to find REAL, WORKING, DIRECT URLs. Double-check that UR
 def generate_demo_results(query, content_type):
     """Fallback demo results with realistic direct URLs"""
     
+    # Create search-friendly query
     search_query = query.replace(' ', '+')
     
     all_results = {
@@ -441,19 +447,4 @@ with st.sidebar:
                 for item in items:
                     st.session_state.pinned_items[b].append({
                         'title': item['title'], 'url': item['url'], 'type': item['type'],
-                        'description': item.get('description', ''), 'added': datetime.now().strftime('%Y-%m-%d')
-                    })
-                st.session_state.selected_items.clear()
-                st.success(f"✦ Pinned {len(items)} items!")
-                st.rerun()
-
-tab1, tab2 = st.tabs(["🔍 SEARCH", f"📋 {st.session_state.current_board.upper()}"])
-
-with tab1:
-    st.title("AI RESEARCH SEARCH")
-    st.caption("✦ Discover curated sources for your creative projects ✦")
-    
-    col1, col2 = st.columns([3, 1])
-    
-    with col1:
-        query = st.text_input("What are you researching?", placeholder="e.g., 1860s Ireland fashion", label
+                        'description': item.get('description', ''), 'added': datetime
