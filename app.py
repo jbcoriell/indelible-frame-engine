@@ -4,6 +4,247 @@ import json
 
 st.set_page_config(page_title="Indelible Frame", page_icon="🎬", layout="wide")
 
+# Art Deco Hollywood Theme CSS
+st.markdown("""
+<style>
+    /* Main background - Art Deco inspired */
+    .main {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2416 50%, #1a1a1a 100%);
+        background-image: 
+            repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(218, 165, 32, 0.03) 35px, rgba(218, 165, 32, 0.03) 70px),
+            linear-gradient(135deg, #1a1a1a 0%, #2d2416 50%, #1a1a1a 100%);
+    }
+    
+    /* Sidebar - Elegant gold and black */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #1a1a1a 0%, #2a2216 100%);
+        border-right: 3px solid #d4af37;
+        box-shadow: 5px 0 15px rgba(212, 175, 55, 0.2);
+    }
+    
+    /* Main title styling */
+    h1 {
+        color: #d4af37 !important;
+        font-family: 'Didot', 'Bodoni MT', serif !important;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        letter-spacing: 3px;
+        border-bottom: 2px solid #d4af37;
+        padding-bottom: 10px;
+    }
+    
+    /* Subtitles */
+    h2, h3 {
+        color: #f5f5dc !important;
+        font-family: 'Didot', 'Bodoni MT', serif !important;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    
+    /* Text color */
+    p, span, label {
+        color: #f5f5dc !important;
+    }
+    
+    /* Input boxes - Art Deco style */
+    .stTextInput > div > div > input {
+        background-color: rgba(26, 26, 26, 0.8) !important;
+        color: #f5f5dc !important;
+        border: 2px solid #d4af37 !important;
+        border-radius: 0px !important;
+        font-family: 'Garamond', serif !important;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Select boxes */
+    .stSelectbox > div > div {
+        background-color: rgba(26, 26, 26, 0.8) !important;
+        color: #f5f5dc !important;
+        border: 2px solid #d4af37 !important;
+        border-radius: 0px !important;
+    }
+    
+    /* Buttons - Hollywood glamour */
+    .stButton > button {
+        background: linear-gradient(135deg, #d4af37 0%, #c9a829 100%) !important;
+        color: #1a1a1a !important;
+        border: none !important;
+        border-radius: 0px !important;
+        font-weight: bold !important;
+        font-family: 'Didot', serif !important;
+        letter-spacing: 2px !important;
+        text-transform: uppercase !important;
+        box-shadow: 0 4px 8px rgba(212, 175, 55, 0.4) !important;
+        transition: all 0.3s ease !important;
+        padding: 12px 24px !important;
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #ffd700 0%, #d4af37 100%) !important;
+        box-shadow: 0 6px 12px rgba(212, 175, 55, 0.6) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Primary button (Search button) */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%) !important;
+        border: 2px solid #ffd700 !important;
+    }
+    
+    /* Containers/Cards - Art Deco frames */
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stContainer"] {
+        background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(45, 36, 22, 0.95) 100%) !important;
+        border: 3px solid #d4af37 !important;
+        border-radius: 0px !important;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(212, 175, 55, 0.1) !important;
+        padding: 20px !important;
+        position: relative;
+    }
+    
+    /* Add decorative corner elements to containers */
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stContainer"]::before,
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stContainer"]::after {
+        content: "◆";
+        position: absolute;
+        color: #d4af37;
+        font-size: 16px;
+    }
+    
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stContainer"]::before {
+        top: 10px;
+        left: 10px;
+    }
+    
+    [data-testid="stVerticalBlock"] > div > div[data-testid="stContainer"]::after {
+        top: 10px;
+        right: 10px;
+    }
+    
+    /* Tabs - Art Deco style */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: rgba(26, 26, 26, 0.6);
+        border-bottom: 3px solid #d4af37;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: #c0c0c0 !important;
+        background-color: transparent;
+        border: none;
+        font-family: 'Didot', serif !important;
+        letter-spacing: 2px;
+        padding: 15px 30px;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #d4af37 !important;
+        background: linear-gradient(180deg, transparent 0%, rgba(212, 175, 55, 0.2) 100%);
+        border-bottom: 4px solid #d4af37 !important;
+    }
+    
+    /* Links - Gold accent */
+    a {
+        color: #d4af37 !important;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+    }
+    
+    a:hover {
+        color: #ffd700 !important;
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+    }
+    
+    /* Divider lines */
+    hr {
+        border-color: #d4af37 !important;
+        opacity: 0.3;
+    }
+    
+    /* Success messages */
+    .stSuccess {
+        background-color: rgba(76, 175, 80, 0.2) !important;
+        border-left: 4px solid #4caf50 !important;
+        color: #a8e6a1 !important;
+    }
+    
+    /* Warning messages */
+    .stWarning {
+        background-color: rgba(255, 193, 7, 0.2) !important;
+        border-left: 4px solid #d4af37 !important;
+        color: #f5f5dc !important;
+    }
+    
+    /* Info messages */
+    .stInfo {
+        background-color: rgba(79, 195, 247, 0.2) !important;
+        border-left: 4px solid #4fc3f7 !important;
+        color: #b3e5fc !important;
+    }
+    
+    /* Checkboxes */
+    .stCheckbox {
+        color: #f5f5dc !important;
+    }
+    
+    /* Spinner */
+    .stSpinner > div {
+        border-top-color: #d4af37 !important;
+    }
+    
+    /* Metric values */
+    [data-testid="stMetricValue"] {
+        color: #d4af37 !important;
+        font-family: 'Didot', serif !important;
+    }
+    
+    /* Caption text */
+    .caption {
+        color: #c0c0c0 !important;
+        font-style: italic;
+    }
+    
+    /* Sidebar title special styling */
+    [data-testid="stSidebar"] h1 {
+        text-align: center;
+        font-size: 28px !important;
+        margin-bottom: 5px !important;
+        text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    
+    /* Add film strip decoration */
+    .main::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: repeating-linear-gradient(
+            90deg,
+            #d4af37 0px,
+            #d4af37 20px,
+            #1a1a1a 20px,
+            #1a1a1a 40px
+        );
+        z-index: 1000;
+    }
+    
+    .main::after {
+        content: "";
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: repeating-linear-gradient(
+            90deg,
+            #d4af37 0px,
+            #d4af37 20px,
+            #1a1a1a 20px,
+            #1a1a1a 40px
+        );
+        z-index: 1000;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 if 'boards' not in st.session_state:
     st.session_state.boards = ['1860s Ireland', 'Sci-Fi Dystopia']
     st.session_state.current_board = '1860s Ireland'
@@ -19,7 +260,6 @@ def search_with_ai(query, content_type):
         
         client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
         
-        # Customize search instruction based on content type
         if content_type == "all":
             type_instruction = "Find 15 diverse sources: mix of articles, images, videos, and PDFs."
         elif content_type == "images":
@@ -65,24 +305,20 @@ Use the web_search tool to find REAL, WORKING, DIRECT URLs. Double-check that UR
             }]
         )
         
-        # Extract and parse response
         response_text = ""
         for block in message.content:
             if block.type == "text":
                 response_text += block.text
         
-        # Clean and parse JSON
         response_text = response_text.strip().replace("```json", "").replace("```", "")
         import re
         json_match = re.search(r'\[\s*\{[\s\S]*\}\s*\]', response_text)
         
         if json_match:
             results = json.loads(json_match.group(0))
-            # Ensure each has an id and validate URLs
             for i, r in enumerate(results):
                 if 'id' not in r:
                     r['id'] = str(i + 1)
-                # Basic URL validation
                 if not r.get('url', '').startswith('http'):
                     r['url'] = 'https://' + r.get('url', '')
             
@@ -100,7 +336,6 @@ Use the web_search tool to find REAL, WORKING, DIRECT URLs. Double-check that UR
 def generate_demo_results(query, content_type):
     """Fallback demo results with realistic direct URLs"""
     
-    # Create search-friendly query
     search_query = query.replace(' ', '+')
     
     all_results = {
@@ -180,21 +415,24 @@ def generate_demo_results(query, content_type):
         return all_results.get(content_type, all_results["articles"])
 
 with st.sidebar:
-    st.title("🎬 Indelible Frame")
+    st.title("🎬 INDELIBLE FRAME")
+    st.caption("✦ Research Engine ✦")
     st.divider()
     
-    board = st.selectbox("Project Boards", st.session_state.boards)
+    st.subheader("⬥ Project Boards")
+    board = st.selectbox("", st.session_state.boards, label_visibility="collapsed")
     st.session_state.current_board = board
     
     new = st.text_input("New board name")
-    if st.button("Create") and new:
+    if st.button("Create Board") and new:
         if new not in st.session_state.boards:
             st.session_state.boards.append(new)
             st.rerun()
     
     if st.session_state.selected_items:
-        st.write(f"**{len(st.session_state.selected_items)} selected**")
-        st.write("Pin to board:")
+        st.divider()
+        st.write(f"**✦ {len(st.session_state.selected_items)} Selected**")
+        st.caption("Pin to board:")
         for b in st.session_state.boards:
             if st.button(f"📌 {b}", key=f"pin_{b}"):
                 items = [r for r in st.session_state.search_results if r['id'] in st.session_state.selected_items]
@@ -206,70 +444,16 @@ with st.sidebar:
                         'description': item.get('description', ''), 'added': datetime.now().strftime('%Y-%m-%d')
                     })
                 st.session_state.selected_items.clear()
-                st.success(f"Pinned {len(items)} items!")
+                st.success(f"✦ Pinned {len(items)} items!")
                 st.rerun()
 
-tab1, tab2 = st.tabs(["🔍 Search", f"📋 {st.session_state.current_board}"])
+tab1, tab2 = st.tabs(["🔍 SEARCH", f"📋 {st.session_state.current_board.upper()}"])
 
 with tab1:
-    st.title("AI Research Search")
+    st.title("AI RESEARCH SEARCH")
+    st.caption("✦ Discover curated sources for your creative projects ✦")
     
     col1, col2 = st.columns([3, 1])
     
     with col1:
-        query = st.text_input("What are you researching?", placeholder="e.g., 1860s Ireland fashion")
-    
-    with col2:
-        content_type = st.selectbox(
-            "Content Type",
-            ["all", "images", "articles", "videos", "pdfs"],
-            format_func=lambda x: {
-                "all": "📚 All Types",
-                "images": "🖼️ Images Only",
-                "articles": "📄 Articles Only", 
-                "videos": "🎬 Videos Only",
-                "pdfs": "📕 PDFs Only"
-            }[x]
-        )
-    
-    if st.button("🔍 Search with AI", type="primary", use_container_width=True):
-        if query:
-            with st.spinner(f"AI is searching for {content_type}..."):
-                st.session_state.search_results = search_with_ai(query, content_type)
-                st.session_state.selected_items.clear()
-                st.rerun()
-    
-    if st.session_state.search_results:
-        st.subheader(f"Found {len(st.session_state.search_results)} sources")
-        for result in st.session_state.search_results:
-            with st.container(border=True):
-                col1, col2 = st.columns([4, 1])
-                with col1:
-                    emoji = {'article': '📄', 'image': '🖼️', 'video': '🎬', 'pdf': '📕'}
-                    st.markdown(f"{emoji.get(result['type'], '📄')} **{result['title']}**")
-                    st.caption(result.get('description', ''))
-                    st.markdown(f"[View Source]({result['url']})")
-                with col2:
-                    checked = result['id'] in st.session_state.selected_items
-                    if st.checkbox("Select", value=checked, key=f"cb_{result['id']}"):
-                        st.session_state.selected_items.add(result['id'])
-                    else:
-                        st.session_state.selected_items.discard(result['id'])
-
-with tab2:
-    st.title(st.session_state.current_board)
-    items = st.session_state.pinned_items.get(st.session_state.current_board, [])
-    
-    if not items:
-        st.info("No items yet. Use Search to find content.")
-    else:
-        st.write(f"**{len(items)} items**")
-        cols = st.columns(3)
-        for idx, item in enumerate(items):
-            with cols[idx % 3]:
-                with st.container(border=True):
-                    emoji = {'article': '📄', 'image': '🖼️', 'video': '🎬', 'pdf': '📕'}
-                    st.markdown(f"### {emoji.get(item['type'], '📄')} {item['title']}")
-                    st.caption(f"{item['type']} • {item['added']}")
-                    st.write(item.get('description', ''))
-                    st.markdown(f"[Open]({item['url']})")
+        query = st.text_input("What are you researching?", placeholder="e.g., 1860s Ireland fashion", label
